@@ -1,0 +1,37 @@
+parameters:
+  # Adds a fallback DATABASE_URL if the env var is not set.
+  # This allows you to run cache:warmup even if your
+  # environment variables are not available yet.
+  # You should not need to change this value.
+  env(DATABASE_URL): ''
+
+doctrine:
+  dbal:
+    default_connection: default
+    connections:
+      default:
+        # configure these for your database server
+        service: true
+        driver: 'pdo_mysql'
+        server_version: '10.7.3-MariaDB'
+        charset: utf8mb4
+        logging: false
+        profiling: false
+        url: 'mysql://root:root@localhost:13306/curso'
+
+
+  orm:
+    default_entity_manager: default
+    auto_generate_proxy_classes: '%kernel.debug%'
+    entity_managers:
+      auto_mapping: true
+      default:
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        connection: default
+        mappings:
+          App:
+            is_bundle: false
+            type: annotation
+            dir: '%kernel.project_dir%/src/Entity'
+            prefix: 'App\Entity'
+            alias: App
